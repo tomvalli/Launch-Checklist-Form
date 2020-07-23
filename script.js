@@ -16,6 +16,34 @@ function init() {
    let button = document.getElementById("formSubmit");
    let form = document.getElementById("launchForm");
 
+   // fetch("https://handlers.education.launchcode.org/static/planets.json").then( response=> {
+   //    response.json().then( json=> {
+
+
+
+   //    });
+   // });
+
+   let json = [];
+   fetch("https://handlers.education.launchcode.org/static/planets.json").then(function(response) {
+         response.json().then(function(json) {
+            const destination = document.getElementById("missionTarget");
+            let index = 0;
+            destination.innerHTML = `
+            <h2>Mission Destination</h2>
+            <ol>
+               <li>Name: ${json[index].name}</li>
+               <li>Diameter: ${json[index].diameter}</li>
+               <li>Star: ${json[index].star}</li>
+               <li>Distance from Earth: ${json[index].distance}</li>
+               <li>Number of Moons: ${json[index].moons}</li>
+            </ol>
+            <img src="${json[index].image}">
+            `;
+            index = (index + 1) % json.length;
+         });
+   });
+
    form.onsubmit = event=> {
       let pilotName = document.querySelector("input[name=pilotName]");
       let copilotName = document.querySelector("input[name=copilotName]");
@@ -53,7 +81,7 @@ function init() {
             event.preventDefault();
          } else if (cargoMass > 10000) {
             faultyItems.style.visibility = "visible";
-            cargoStatus.innerHTML = "Cargo mass is to great for launch.";
+            cargoStatus.innerHTML = "Cargo mass is too great for launch.";
             launchStatus.innerHTML = "Shuttle not ready for launch.";
             launchStatus.style.color = "red";
             event.preventDefault();
@@ -71,18 +99,3 @@ function init() {
 }
 
 window.onload = init;
-
-
-
-
-
-
-
-
-      // fuelLevel = Number(fuelLevel.value);
-      // cargoMass = Number(cargoMass.value);
-      // if (isNaN(fuelLevel)) {
-      //    window.alert("Fuel level must be a number");
-      // } else if (isNaN(cargoMass)){
-      //    window.alert("Cargo mass must be a number");
-      // } else {
