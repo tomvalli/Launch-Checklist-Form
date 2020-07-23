@@ -16,26 +16,11 @@ function init() {
    let button = document.getElementById("formSubmit");
    let form = document.getElementById("launchForm");
 
-
-
-   button.onclick = ()=> {
+   form.onsubmit = event=> {
       let pilotName = document.querySelector("input[name=pilotName]");
       let copilotName = document.querySelector("input[name=copilotName]");
       let fuelLevel = document.querySelector("input[name=fuelLevel]");
       let cargoMass = document.querySelector("input[name=cargoMass]");
-      
-      if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === "") {
-         window.alert("All fields are required.");
-         event.preventDefault();
-         return;
-      }
-      fuelLevel = Number(fuelLevel.value);
-      cargoMass = Number(cargoMass.value);
-      if (isNaN(fuelLevel)) {
-         window.alert("Fuel level must be a number");
-      } else if (isNaN(cargoMass)){
-         window.alert("Cargo mass must be a number");
-      }
       let faultyItems = document.getElementById("faultyItems");
       let pilotStatus = document.getElementById("pilotStatus");
       let copilotStatus = document.getElementById("copilotStatus");
@@ -43,32 +28,61 @@ function init() {
       let cargoStatus = document.getElementById("cargoStatus");
       let launchStatus = document.getElementById("launchStatus");
 
-      pilotStatus.innerHTML = `Pilot ${pilotName} is ready for launch.`;
-      copilotStatus.innerHTML = `Co-pilot ${copilotName} is ready for launch`;
-
-      if (fuelLevel < 10000) {
-         faultyItems.style.visibility = "visible";
-         fuelStatus.innerHTML = "Fuel level too low for launch.";
-         launchStatus.innerHTML = "Shuttle not ready for launch.";
-         launchStatus.style.color = red;
-      } else if (cargoMass > 10000) {
-         faultyItems.style.visibility = "visible";
-         cargoStatus.innerHTML = "Cargo mass is to great for launch.";
-         launchStatus.innerHTML = "Shuttle not ready for launch.";
-         launchStatus.style.color = red;
+      if (pilotName.value === "" || copilotName.value === "" || fuelLevel.value === "" || cargoMass.value === "") {
+         window.alert("All fields are required.");
+         event.preventDefault();
+         //return;
+      } else if (isNaN(Number(fuelLevel.value))) {
+         window.alert("Fuel level must be a number");
+         event.preventDefault();
+      } else if (isNaN(Number(cargoMass.value))){
+         window.alert("Cargo mass must be a number");
+         event.preventDefault();
       } else {
-         launchStatus.innerHTML = "Shuttle is ready for launch.";
-         launchStatus.style.color = green;
+         fuelLevel = Number(fuelLevel.value);
+         cargoMass = Number(cargoMass.value);
+
+         pilotStatus.innerHTML = `Pilot ${pilotName.value} is ready for launch.`;
+         copilotStatus.innerHTML = `Co-pilot ${copilotName.value} is ready for launch`;
+
+         if (fuelLevel < 10000) {
+            faultyItems.style.visibility = "visible";
+            fuelStatus.innerHTML = "Fuel level too low for launch.";
+            launchStatus.innerHTML = "Shuttle not ready for launch.";
+            launchStatus.style.color = "red";
+            event.preventDefault();
+         } else if (cargoMass > 10000) {
+            faultyItems.style.visibility = "visible";
+            cargoStatus.innerHTML = "Cargo mass is to great for launch.";
+            launchStatus.innerHTML = "Shuttle not ready for launch.";
+            launchStatus.style.color = "red";
+            event.preventDefault();
+         } else {
+            faultyItems.style.visibility = "visible";
+            launchStatus.innerHTML = "Shuttle is ready for launch.";
+            launchStatus.style.color = "green";
+            event.preventDefault();
+         }
+
+         event.preventDefault();
       }
-
-
-      
-
-
-
-
-      
+      event.preventDefault();
    };
 }
 
 window.onload = init;
+
+
+
+
+
+
+
+
+      // fuelLevel = Number(fuelLevel.value);
+      // cargoMass = Number(cargoMass.value);
+      // if (isNaN(fuelLevel)) {
+      //    window.alert("Fuel level must be a number");
+      // } else if (isNaN(cargoMass)){
+      //    window.alert("Cargo mass must be a number");
+      // } else {
