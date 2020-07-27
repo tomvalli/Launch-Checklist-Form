@@ -56,13 +56,15 @@ function init() {
             launchStatus.innerHTML = "Shuttle not ready for launch.";
             launchStatus.style.color = "red";
             event.preventDefault();
-         } else if (cargoMass > 10000) {
+         }
+         if (cargoMass > 10000) {
             faultyItems.style.visibility = "visible";
             cargoStatus.innerHTML = "Cargo mass is too great for launch.";
             launchStatus.innerHTML = "Shuttle not ready for launch.";
             launchStatus.style.color = "red";
             event.preventDefault();
-         } else {
+         } 
+         if (fuelLevel >= 10000 && cargoMass <= 10000) {
             faultyItems.style.visibility = "visible";
             launchStatus.innerHTML = "Shuttle is ready for launch.";
             launchStatus.style.color = "green";
